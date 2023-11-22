@@ -48,23 +48,27 @@ class MainScene extends Phaser.Scene {
 
    // シーン初期化処理
 
-   create() {
+    create() {
 
     // 単体画像をシーンに追加(X座標,Y座標,画像名)
 
-   this.add.image(400, 300, 'sky');
+    this.add.image(400, 300, 'sky');
 
    // 星を(200,200)に追加
 
-   this.add.image(200, 200, 'star');
+    this.add.image(200, 200, 'star');
 
    // エイリアンを(200,200)に追加
 
-   this.player = this.add.image(500, 350, 'alien1');
+    this.player1 = this.add.image(400, 300, 'alien1');
+    this.player2 = this.add.image(400, 300, 'alien2');
+    this.player3 = this.add.image(400, 300, 'alien3');
 
 // プレイヤーの移動方向フラグを設定　１：右向き　−１：左向き
 
-   this.player_direction = 1;
+    this.player1_direction = 1;
+    this.player2_direction = 1;
+    this.player3_direction = 1;
 
 }
 
@@ -73,41 +77,49 @@ class MainScene extends Phaser.Scene {
 
 update() {
 
-    // キーボードの情報を取得
+   // プレイヤーの向きフラグを変更
 
-     let cursors = this.input.keyboard.createCursorKeys();
+    if (this.player1.x >= D_WIDTH - 100) this.player1_direction = -1;
 
-     if (cursors.up.isDown) {
+    if (this.player1.x <= 100) this.player1_direction = 1;
 
-     //console.log("Up!");
+    if (this.player2.y >= D_HEIGHT - 100) this.player2_direction = -1;
 
-     this.player.y -= 3;// 上方向に移動
+    if (this.player2.y <= 100) this.player2_direction = 1;
+
+    if (this.player3.y >= D_HEIGHT - 100 || this.player3.x>= D_WIDTH -100) this.player3_direction = -1;
+
+    if (this.player3.y <= 100 || this.player3.x <= 100) this.player3_direction = 1;
+   // プレイヤーの移動
+
+    if (this.player1_direction == 1) {
+
+        this.player1.x += 5;// 横方向へ移動を設定
+
+    } else {
+
+        this.player1.x -= 5;// 横方向へ移動を設定
+    }
+    if (this.player2_direction == 1) {
+
+        this.player2.y += 1;
+
+    } else {
+
+        this.player2.y -= 1;
+    }
+
+    if (this.player3_direction == 1) {
+        this.player3.y += 2;// 横方向へ移動を設定
+        this.player3.x += 2;
+        
+    } else {
+        this.player3.y -= 2;// 横方向へ移動を設定
+        this.player3.x -= 2;
+
+    }
 
 
-     } else if (cursors.down.isDown) {
-
-     //console.log("Down!");
-
-     this.player.y += 3;// 下方向に移動
-
-
-     } else if (cursors.left.isDown) {
-
-     //console.log("Left!");
-
-     this.player.x -= 3;// 左方向に移動
-
-
-     } else if (cursors.right.isDown) {
-
-     //console.log("Right!");
-
-     this.player.x += 3;// 右方向に移動
-
-
-     }
-
-
- }
+}
 
 }
